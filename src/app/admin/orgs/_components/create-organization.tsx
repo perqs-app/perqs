@@ -127,14 +127,16 @@ export function CreateOrganization() {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={loading}>
-              <Loader2Icon
-                className={cn("mr-2 h-4 w-4 animate-spin", {
-                  hidden: !loading,
-                })}
-              />
-              Submit
-            </Button>
+            <div className="flex justify-end">
+              <Button type="submit" disabled={loading}>
+                <Loader2Icon
+                  className={cn("mr-2 h-4 w-4 animate-spin", {
+                    hidden: !loading,
+                  })}
+                />
+                Submit
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>

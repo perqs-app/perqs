@@ -21,7 +21,8 @@ export async function inviteUser(
       organizationId: organization.id,
       inviterUserId: userId,
     });
-  } catch (error: any) {
-    throw new Error(error.errors[0].longMessage);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to invite user");
   }
 }
