@@ -12,7 +12,6 @@ import { Perk } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
-import { InviteUser } from "../../orgs/_components/invite-user";
 import { UpdatePerk } from "./update-perk";
 
 type PerkOverviewProps = {

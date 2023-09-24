@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/utils";
+import { prisma } from "@/lib/prisma";
 import { CreatePerk } from "./_components/create-perk";
 import { PerkOverview } from "./_components/perk-overview";
 

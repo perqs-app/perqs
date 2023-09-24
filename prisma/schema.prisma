@@ -16,8 +16,8 @@ model Perk {
   title         String
   description   String  @db.Text
   category      String
-  coverImageUrl String  @db.Text
-  logoImageUrl  String  @db.Text
+  coverImageUrl String? @db.Text
+  logoImageUrl  String? @db.Text
   price         Int
   enabled       Boolean @default(true)
   slug          String  @unique

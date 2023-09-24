@@ -79,17 +79,10 @@ export function InviteUser(props: InviteUserProps) {
     } catch (error: any) {
       setLoading(false);
 
-      if (error.message) {
-        toast({
-          title: "Error",
-          description: error.message,
-        });
-        return;
-      }
-
       toast({
         title: "Error",
         description: "Something went wrong, please try again later",
+        variant: "destructive",
       });
     }
   }

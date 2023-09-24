@@ -26,7 +26,17 @@ export function CreatePerk() {
 
   async function handleSubmit(values: z.infer<typeof schema>) {
     try {
-      await createPerk(values);
+      const formData = new FormData();
+
+      for (const [key, value] of Object.entries(values)) {
+        if (value instanceof File || typeof value === "string") {
+          formData.append(key, value);
+        } else if (typeof value === "number" || typeof value === "boolean") {
+          formData.append(key, value.toString());
+        }
+      }
+
+      await createPerk(formData);
 
       toast({
         title: "Perk created",
@@ -41,6 +51,7 @@ export function CreatePerk() {
       toast({
         title: "Failed to create perk",
         description: "Something went wrong while creating the perk",
+        variant: "destructive",
       });
     }
   }

@@ -30,7 +30,17 @@ export function UpdatePerk(props: UpdatePerkProps) {
 
   async function handleSubmit(values: z.infer<typeof schema>) {
     try {
-      await updatePerk(perk.id, values);
+      const formData = new FormData();
+
+      for (const [key, value] of Object.entries(values)) {
+        if (value instanceof File || typeof value === "string") {
+          formData.append(key, value);
+        } else if (typeof value === "number" || typeof value === "boolean") {
+          formData.append(key, value.toString());
+        }
+      }
+
+      await updatePerk(perk.id, formData);
 
       toast({
         title: "Perk updated",
@@ -45,6 +55,7 @@ export function UpdatePerk(props: UpdatePerkProps) {
       toast({
         title: "Failed to update perk",
         description: "Something went wrong while updating the perk",
+        variant: "destructive",
       });
     }
   }
@@ -53,14 +64,14 @@ export function UpdatePerk(props: UpdatePerkProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-          <EditIcon className="w-4 h-4 mr-2" /> Edit Perk
+          <EditIcon className="w-4 h-4 mr-2" /> Update Perk
         </DropdownMenuItem>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create Perk</DialogTitle>
+          <DialogTitle>Update Perk</DialogTitle>
           <DialogDescription>
-            Fill in the following fields to create a new perk
+            Update any of the following fields.
           </DialogDescription>
         </DialogHeader>
         <PerkForm onSubmit={handleSubmit} perk={perk} />

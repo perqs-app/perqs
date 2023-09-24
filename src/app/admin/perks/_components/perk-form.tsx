@@ -37,10 +37,12 @@ export const schema = z.object({
     z.literal("entertainment"),
     z.string(),
   ]),
-  coverImageUrl: z.string().url(),
-  logoImageUrl: z.string().url(),
   price: z.coerce.number(),
   enabled: z.boolean(),
+  coverImage:
+    typeof window !== "undefined" ? z.instanceof(File).optional() : z.string(),
+  logoImage:
+    typeof window !== "undefined" ? z.instanceof(File).optional() : z.string(),
 });
 
 type PerkFormProps = {
@@ -59,10 +61,7 @@ export function PerkForm(props: PerkFormProps) {
       title: perk?.title ?? "",
       description: perk?.description ?? "",
       category: perk?.category ?? "sports",
-      coverImageUrl: perk?.coverImageUrl ?? "",
-      logoImageUrl: perk?.logoImageUrl ?? "",
       price: perk?.price ?? 0,
-      enabled: perk?.enabled ?? true,
       slug: perk?.slug ?? "",
     },
   });
@@ -115,6 +114,46 @@ export function PerkForm(props: PerkFormProps) {
         <div className="flex gap-2">
           <FormField
             control={form.control}
+            name="coverImage"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Cover image</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    onChange={(e) =>
+                      field.onChange(e.target.files ? e.target.files[0] : null)
+                    }
+                  />
+                </FormControl>
+                <FormDescription>Cover image for the company</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="logoImage"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Logo image</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    onChange={(e) =>
+                      field.onChange(e.target.files ? e.target.files[0] : null)
+                    }
+                  />
+                </FormControl>
+                <FormDescription>Logo of the company</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
             name="price"
             render={({ field }) => (
               <FormItem className="flex-1">
@@ -153,46 +192,6 @@ export function PerkForm(props: PerkFormProps) {
                   </SelectContent>
                 </Select>
                 <FormDescription>Used to categorize the perk.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="flex gap-2">
-          <FormField
-            control={form.control}
-            name="coverImageUrl"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Cover image</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </FormControl>
-                <FormDescription>
-                  The url of an image that will be used as the cover letter.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="logoImageUrl"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Logo image</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </FormControl>
-                <FormDescription>
-                  The url of an image that will be used as the logo.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
