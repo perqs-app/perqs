@@ -16,47 +16,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { UserButton } from "@clerk/nextjs";
-import {
-  ArrowLeftIcon,
-  Building2Icon,
-  ClipboardCheckIcon,
-  LayoutListIcon,
-  MenuIcon,
-  UsersIcon,
-} from "lucide-react";
+import { LucideIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-export const NAVIGATION_ITEMS = [
-  {
-    title: "Tasks",
-    href: "/admin",
-    icon: ClipboardCheckIcon,
-  },
-  {
-    title: "Perks",
-    href: "/admin/perks",
-    icon: LayoutListIcon,
-  },
-  {
-    title: "Users",
-    href: "/admin/users",
-    icon: UsersIcon,
-  },
-  {
-    title: "Organizations",
-    href: "/admin/orgs",
-    icon: Building2Icon,
-  },
+type HeaderProps = {
+  items: {
+    title: string;
+    href: string;
+    icon: LucideIcon;
+  }[];
+};
 
-  {
-    title: "Back to Home",
-    href: "/",
-    icon: ArrowLeftIcon,
-  },
-];
-
-export function Header() {
+export function Header(props: HeaderProps) {
   return (
     <header className="flex justify-between lg:justify-end p-4 bg-background">
       <Sheet>
@@ -71,7 +43,7 @@ export function Header() {
           </SheetHeader>
           <NavigationMenu data-orientation="vertical">
             <NavigationMenuList className="flex-col items-start space-x-0 space-y-1 max-w-full">
-              {NAVIGATION_ITEMS.map(({ href, icon, title }) => (
+              {props.items.map(({ href, icon, title }) => (
                 <NavigationMenuItem key={href}>
                   <Link href={href} legacyBehavior passHref>
                     <NavigationMenuLink

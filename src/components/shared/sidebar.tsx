@@ -8,15 +8,23 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import React from "react";
-import { NAVIGATION_ITEMS } from "./header";
 import Link from "next/link";
+import { LucideIcon } from "lucide-react";
 
-export function Sidebar() {
+type SidebarProps = {
+  items: {
+    title: string;
+    href: string;
+    icon: LucideIcon;
+  }[];
+};
+
+export function Sidebar(props: SidebarProps) {
   return (
-    <div className="hidden lg:block w-60 p-2 bg-background/50">
+    <aside className="hidden lg:block w-60 p-2 bg-background/50">
       <NavigationMenu data-orientation="vertical">
         <NavigationMenuList className="flex-col items-start space-x-0 space-y-1">
-          {NAVIGATION_ITEMS.map(({ href, icon, title }) => (
+          {props.items.map(({ href, icon, title }) => (
             <NavigationMenuItem key={href}>
               <Link href={href} legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -28,6 +36,6 @@ export function Sidebar() {
           ))}
         </NavigationMenuList>
       </NavigationMenu>
-    </div>
+    </aside>
   );
 }

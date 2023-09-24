@@ -2,40 +2,13 @@
 
 import { Header } from "@/components/shared/header";
 import { Sidebar } from "@/components/shared/sidebar";
-import {
-  ClipboardCheckIcon,
-  LayoutListIcon,
-  UsersIcon,
-  Building2Icon,
-  ArrowLeftIcon,
-} from "lucide-react";
+import { UserCogIcon } from "lucide-react";
 
 export const NAVIGATION_ITEMS = [
   {
-    title: "Tasks",
+    title: "Admin",
     href: "/admin",
-    icon: ClipboardCheckIcon,
-  },
-  {
-    title: "Perks",
-    href: "/admin/perks",
-    icon: LayoutListIcon,
-  },
-  {
-    title: "Users",
-    href: "/admin/users",
-    icon: UsersIcon,
-  },
-  {
-    title: "Organizations",
-    href: "/admin/orgs",
-    icon: Building2Icon,
-  },
-
-  {
-    title: "Back to Home",
-    href: "/",
-    icon: ArrowLeftIcon,
+    icon: UserCogIcon,
   },
 ];
 
