@@ -33,8 +33,12 @@ export const schema = z.object({
   description: z.string().min(1, { message: "This field is required" }),
   slug: z.string().min(1, { message: "This field is required" }),
   category: z.union([
-    z.literal("sports"),
-    z.literal("entertainment"),
+    z.literal("health-fitness"),
+    z.literal("shopping"),
+    z.literal("food"),
+    z.literal("lifestyle"),
+    z.literal("personal-development"),
+    z.literal("leisure"),
     z.string(),
   ]),
   price: z.coerce.number(),
@@ -60,9 +64,10 @@ export function PerkForm(props: PerkFormProps) {
     defaultValues: {
       title: perk?.title ?? "",
       description: perk?.description ?? "",
-      category: perk?.category ?? "sports",
+      category: perk?.category ?? "health-fitness",
       price: perk?.price ?? 0,
       slug: perk?.slug ?? "",
+      enabled: perk?.enabled ?? false,
     },
   });
 
@@ -187,8 +192,16 @@ export function PerkForm(props: PerkFormProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="sports">Sports</SelectItem>
-                    <SelectItem value="entertainment">Entertainment</SelectItem>
+                    <SelectItem value="health-fitness">
+                      Health & Fitness
+                    </SelectItem>
+                    <SelectItem value="shopping">Shopping</SelectItem>
+                    <SelectItem value="food">Food</SelectItem>
+                    <SelectItem value="lifestyle">Lifestyle</SelectItem>
+                    <SelectItem value="personal-development">
+                      Personal Development
+                    </SelectItem>
+                    <SelectItem value="leisure">Leisure</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>Used to categorize the perk.</FormDescription>
