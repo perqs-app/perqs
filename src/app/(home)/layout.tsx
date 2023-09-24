@@ -4,7 +4,7 @@ import { Header } from "@/components/shared/header";
 import { Sidebar } from "@/components/shared/sidebar";
 import { UserCogIcon } from "lucide-react";
 
-export const NAVIGATION_ITEMS = [
+const NAVIGATION_ITEMS = [
   {
     title: "Admin",
     href: "/admin",

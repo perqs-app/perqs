@@ -10,7 +10,7 @@ import {
   ArrowLeftIcon,
 } from "lucide-react";
 
-export const NAVIGATION_ITEMS = [
+const NAVIGATION_ITEMS = [
   {
     title: "Tasks",
     href: "/admin",
