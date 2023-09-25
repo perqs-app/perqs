@@ -2,9 +2,14 @@
 
 import { Header } from "@/components/shared/header";
 import { Sidebar } from "@/components/shared/sidebar";
-import { UserCogIcon } from "lucide-react";
+import { HomeIcon, UserCogIcon } from "lucide-react";
 
 const NAVIGATION_ITEMS = [
+  {
+    title: "Home",
+    href: "/",
+    icon: HomeIcon,
+  },
   {
     title: "Admin",
     href: "/admin",

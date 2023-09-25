@@ -49,7 +49,31 @@ export async function updatePerk(id: number, data: FormData) {
 
   let coverImageUrl, logoImageUrl;
 
-  if (result.coverImage || result.logoImage) {
+  if (result.coverImage && !result.logoImage) {
+    const coverImageResponse = await utapi.uploadFiles(result.coverImage);
+
+    if (coverImageResponse.error) {
+      throw new Error("Failed to upload image");
+    }
+
+    coverImageUrl = coverImageResponse.data.url;
+
+    delete result.coverImage;
+  }
+
+  if (result.logoImage && !result.coverImage) {
+    const logoImageResponse = await utapi.uploadFiles(result.logoImage);
+
+    if (logoImageResponse.error) {
+      throw new Error("Failed to upload image");
+    }
+
+    logoImageUrl = logoImageResponse.data.url;
+
+    delete result.logoImage;
+  }
+
+  if (result.coverImage && result.logoImage) {
     const [coverImageResponse, logoImageResponse] = await utapi.uploadFiles([
       result.coverImage,
       result.logoImage,
