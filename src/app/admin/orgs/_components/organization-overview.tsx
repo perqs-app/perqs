@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { InviteUser } from "./invite-user";
 import { format } from "date-fns";
-import { DeleteOrganization } from "./delete-organization";
 
 type OrganizationOverviewProps = {
   organizations: Organization[];
@@ -61,7 +60,6 @@ export function OrganizationOverview(props: OrganizationOverviewProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <InviteUser organization={organization} />
-              <DeleteOrganization organization={organization} />
             </DropdownMenuContent>
           </DropdownMenu>
         );
