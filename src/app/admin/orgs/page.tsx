@@ -2,8 +2,10 @@ import { clerkClient } from "@clerk/nextjs";
 import { CreateOrganization } from "./_components/create-organization";
 import { OrganizationOverview } from "./_components/organization-overview";
 
-export default async function Orgs() {
+export default async function OrgsPage() {
+  // This request seems cached for now, so a hard reload seems necessary to see changes.
   const organizations = await clerkClient.organizations.getOrganizationList({
+    limit: 20,
     includeMembersCount: true,
   });
 

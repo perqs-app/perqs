@@ -13,6 +13,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 import { UpdatePerk } from "./update-perk";
+import { formatter } from "@/lib/utils";
 
 type PerkOverviewProps = {
   perks: Perk[];
@@ -22,11 +23,11 @@ export function PerkOverview(props: PerkOverviewProps) {
   const { perks } = props;
 
   const columns: ColumnDef<Perk>[] = [
+    { accessorKey: "id", header: "ID" },
     { accessorKey: "title", header: "Title" },
     {
-      accessorKey: "price",
       header: "Price",
-      cell: ({ row }) => <div>€{row.getValue("price")}</div>,
+      cell: ({ row }) => <div>{formatter.format(row.getValue("price"))}</div>,
     },
     { accessorKey: "category", header: "Category" },
     { accessorKey: "enabled", header: "Enabled" },

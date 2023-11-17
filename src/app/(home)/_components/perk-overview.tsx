@@ -1,11 +1,18 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { formatter } from "@/lib/utils";
 import { Perk } from "@prisma/client";
-import { XIcon } from "lucide-react";
+import { MoreHorizontalIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import NoSSR from "react-no-ssr";
 
 type PerkOverviewProps = {
   perks: Perk[];
@@ -44,36 +51,51 @@ export function PerkOverview(props: PerkOverviewProps) {
       {perks.map((perk) => (
         <div
           key={perk.id}
-          className="flex-none flex flex-col items-center justify-center h-64 bg-white rounded-lg shadow-lg p-4"
+          className="flex-none flex flex-col items-center justify-center h-42 max-h-42 bg-white rounded-lg border"
         >
-          <div className="flex flex-col items-center justify-center w-full h-full p-4 gap-2">
-            <header className="flex items-start justify-start gap-2 w-full">
-              {perk.logoImageUrl ? (
-                <Image
-                  src={perk.logoImageUrl}
-                  width={50}
-                  height={50}
-                  className="object-cover h-[50px] w-[50px] rounded"
-                  alt="perk-logo"
-                />
-              ) : (
-                <div className="bg-muted w-[50px] h-[50px] rounded"></div>
-              )}
-              <div>
-                <h1 className="text-2xl font-bold">{perk.title}</h1>
-                <p className="text-muted-foreground capitalize text-sm">
-                  {perk.category.replace("-", " & ")}
+          <div className="flex flex-col w-full h-full">
+            <header className="flex items-center justify-between w-full p-6 bg-muted/50 border-b">
+              <div className="flex gap-4 items-center">
+                {perk.logoImageUrl ? (
+                  <Image
+                    src={perk.logoImageUrl}
+                    width={50}
+                    height={50}
+                    className="object-cover h-[50px] w-[50px] rounded"
+                    alt="perk-logo"
+                  />
+                ) : (
+                  <div className="bg-muted w-[50px] h-[50px] rounded border"></div>
+                )}
+                <p className="text-md font-semibold">{perk.title}</p>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <MoreHorizontalIcon className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    onClick={() => router.push("perks/" + perk.slug)}
+                  >
+                    View
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </header>
+            <div className="p-6 py-2 text-sm text-muted-foreground">
+              <div className="flex justify-between py-4 border-b">
+                <p>Price</p>
+                <p className="text-card-foreground">
+                  {formatter.format(perk.price)}
                 </p>
               </div>
-            </header>
-            <NoSSR>
-              <p
-                className="text-sm text-gray-500 overflow-hidden"
-                dangerouslySetInnerHTML={{ __html: perk.description }}
-              ></p>
-            </NoSSR>
-
-            <Button className="self-end">Read more</Button>
+              <div className="flex justify-between py-4">
+                <p>Category</p>
+                <Badge>{perk.category}</Badge>
+              </div>
+            </div>
           </div>
         </div>
       ))}

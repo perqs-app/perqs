@@ -41,12 +41,12 @@ const NAVIGATION_ITEMS = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col h-screen">
-      <Header items={NAVIGATION_ITEMS} />
-      <div className="flex flex-1">
-        <Sidebar items={NAVIGATION_ITEMS} />
-        <main className="flex-1">{children}</main>
-      </div>
+    <div className="flex h-screen">
+      <Sidebar items={NAVIGATION_ITEMS} />
+      <main className="flex-1">
+        <Header items={NAVIGATION_ITEMS} />
+        {children}
+      </main>
     </div>
   );
 }

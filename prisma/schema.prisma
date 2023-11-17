@@ -21,4 +21,26 @@ model Perk {
   price         Int
   enabled       Boolean @default(true)
   slug          String  @unique
+  Task          Task[]
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  perk   Perk   @relation(fields: [perkId], references: [id])
+  perkId Int
+  userId String
+
+  status  TaskStatus @default(PENDING)
+  message String?    @db.Text
+
+  @@index([perkId])
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
 }

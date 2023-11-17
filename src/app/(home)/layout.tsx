@@ -2,13 +2,18 @@
 
 import { Header } from "@/components/shared/header";
 import { Sidebar } from "@/components/shared/sidebar";
-import { HomeIcon, UserCogIcon } from "lucide-react";
+import { BlocksIcon, HomeIcon, PlusIcon, UserCogIcon } from "lucide-react";
 
 const NAVIGATION_ITEMS = [
   {
     title: "Home",
     href: "/",
     icon: HomeIcon,
+  },
+  {
+    title: "Perks",
+    href: "/perks",
+    icon: BlocksIcon,
   },
   {
     title: "Admin",
@@ -19,12 +24,12 @@ const NAVIGATION_ITEMS = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col h-screen">
-      <Header items={NAVIGATION_ITEMS} />
-      <div className="flex flex-1">
-        <Sidebar items={NAVIGATION_ITEMS} />
-        <main className="flex-1">{children}</main>
-      </div>
+    <div className="flex h-screen w-screen max-w-screen">
+      <Sidebar items={NAVIGATION_ITEMS} />
+      <main className="flex-1 max-w-full max-h-full overflow-auto">
+        <Header items={NAVIGATION_ITEMS} />
+        {children}
+      </main>
     </div>
   );
 }

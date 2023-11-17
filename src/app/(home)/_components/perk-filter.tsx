@@ -23,6 +23,8 @@ import z from "zod";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
+import { debounce } from "lodash";
+import React from "react";
 
 const schema = z.object({
   title: z.string(),
@@ -50,8 +52,8 @@ export function PerkFilter(props: PerkFilterProps) {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     values: {
-      category: category || "",
-      title: title || "",
+      category: category ?? "",
+      title: title ?? "",
     },
   });
 
@@ -90,7 +92,10 @@ export function PerkFilter(props: PerkFilterProps) {
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(e) => {
+                    field.onChange(e);
+                    form.handleSubmit(onSubmit)();
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>

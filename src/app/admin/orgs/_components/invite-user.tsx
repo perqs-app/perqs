@@ -2,7 +2,7 @@
 
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Link, Loader2, Loader2Icon, MailPlusIcon } from "lucide-react";
+import { Loader2Icon, MailPlusIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,

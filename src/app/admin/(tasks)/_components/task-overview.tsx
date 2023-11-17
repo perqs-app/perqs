@@ -1,9 +1,9 @@
 "use client";
 
+import { Perk, Task } from "@prisma/client";
 import { DataTable } from "@/components/ui/data-table";
-
 import { ColumnDef } from "@tanstack/react-table";
-import { Organization } from "@clerk/nextjs/server";
+import { format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,20 +12,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { InviteUser } from "./invite-user";
-import { format } from "date-fns";
-import { DeleteOrganization } from "./delete-organization";
+import { ResolveTask } from "./resolve-task";
+import { formatter } from "@/lib/utils";
+import { User } from "@clerk/nextjs/server";
 
-type OrganizationOverviewProps = {
-  organizations: Organization[];
+type TaskOverviewProps = {
+  tasks: (Task & { perk: Perk })[];
 };
 
-export function OrganizationOverview(props: OrganizationOverviewProps) {
-  const { organizations } = props;
+export function TaskOverview(props: TaskOverviewProps) {
+  const { tasks } = props;
 
-  const columns: ColumnDef<Organization>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "slug", header: "Slug" },
+  const columns: ColumnDef<Task & { perk: Perk }>[] = [
+    { accessorKey: "id", header: "ID" },
+    {
+      header: "Status",
+      accessorKey: "status",
+    },
+    {
+      accessorKey: "perk.title",
+      header: "Title",
+    },
+    {
+      header: "Price",
+      cell: ({ row }) => <div>{formatter.format(row.original.perk.price)}</div>,
+    },
     {
       accessorKey: "createdAt",
       header: "Created At",
@@ -40,7 +51,7 @@ export function OrganizationOverview(props: OrganizationOverviewProps) {
       header: "Updated At",
       cell: ({ row }) => (
         <div>
-          {format(new Date(row.getValue("updatedAt")), "E, d MMM yyyy")}
+          {format(new Date(row.getValue("createdAt")), "E, d MMM yyyy")}
         </div>
       ),
     },
@@ -48,7 +59,7 @@ export function OrganizationOverview(props: OrganizationOverviewProps) {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const organization = row.original;
+        const task = row.original;
 
         return (
           <DropdownMenu>
@@ -60,8 +71,7 @@ export function OrganizationOverview(props: OrganizationOverviewProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <InviteUser organization={organization} />
-              <DeleteOrganization organization={organization} />
+              <ResolveTask task={task} />
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -69,5 +79,5 @@ export function OrganizationOverview(props: OrganizationOverviewProps) {
     },
   ];
 
-  return <DataTable columns={columns} data={organizations} />;
+  return <DataTable columns={columns} data={tasks} />;
 }

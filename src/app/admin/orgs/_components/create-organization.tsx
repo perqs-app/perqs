@@ -27,6 +27,7 @@ import { useOrganizationList } from "@clerk/nextjs";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   name: z.string().min(1, { message: "This field is required" }),
@@ -36,6 +37,8 @@ const schema = z.object({
 export function CreateOrganization() {
   const [loading, setLoading] = React.useState<boolean>();
   const [open, setOpen] = React.useState<boolean>();
+
+  const router = useRouter();
 
   const { toast } = useToast();
 
@@ -63,11 +66,16 @@ export function CreateOrganization() {
       setOpen(false);
       form.reset();
 
+      router.refresh();
+
       toast({
         title: "Organization created",
-        description: "Your organization has been created",
+        description:
+          "Your organization has been created (Hard reload might be required)",
       });
-    } catch (_) {
+    } catch (error) {
+      console.log({ error });
+
       setLoading(false);
       toast({
         title: "Error",

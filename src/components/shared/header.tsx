@@ -15,7 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useClerk } from "@clerk/nextjs";
 import { LucideIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -30,7 +30,7 @@ type HeaderProps = {
 
 export function Header(props: HeaderProps) {
   return (
-    <header className="flex justify-between lg:justify-end p-4 bg-background">
+    <header className="flex lg:hidden justify-between py-5 px-8 md:px-12 bg-background">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="ghost" className="lg:hidden">

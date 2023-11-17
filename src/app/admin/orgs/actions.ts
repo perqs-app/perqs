@@ -26,3 +26,12 @@ export async function inviteUser(
     throw new Error("Failed to invite user");
   }
 }
+
+export async function deleteOrganization(organization: Organization) {
+  try {
+    await clerkClient.organizations.deleteOrganization(organization.id);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to invite user");
+  }
+}

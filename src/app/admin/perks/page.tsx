@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { CreatePerk } from "./_components/create-perk";
 import { PerkOverview } from "./_components/perk-overview";
 
-export default async function Perks() {
+export default async function PerksPage() {
   const perks = await prisma.perk.findMany();
 
   return (
